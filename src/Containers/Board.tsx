@@ -2,8 +2,10 @@ import * as React from 'react';
 import SideBar from '../Components/SideBar';
 import Container from '@material-ui/core/Container';
 import BoardHeader from '../Components/BoardHeader';
+import BoardContent from '../Components/BoardContent';
 import { makeStyles } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 /**
  * Returns a page where it displays a kanban style board to users
  */
@@ -22,6 +24,7 @@ const Board: React.FC = () => {
       <SideBar />
       <Container className={classes.root} maxWidth="xl">
         <BoardHeader />
+        <BoardContent />
       </Container>
     </div>
   );

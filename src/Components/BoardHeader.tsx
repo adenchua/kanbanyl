@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const options = ['Sprint 1', 'Sprint 2', 'Sprint 3'];
 
-const BoardHeader = () => {
+const BoardHeader: React.FC = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<any>(null);

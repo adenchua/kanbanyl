@@ -6,11 +6,12 @@ import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import orange from '@material-ui/core/colors/orange';
 
 let theme = createMuiTheme({
   palette: {
     primary: blueGrey,
-    secondary: { main: '#FFA500' },
+    secondary: { main: orange[300] },
   },
 });
 
