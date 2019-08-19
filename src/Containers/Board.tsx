@@ -5,7 +5,7 @@ import BoardHeader from '../Components/BoardHeader';
 import BoardContent from '../Components/BoardContent';
 import { makeStyles } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+
 /**
  * Returns a page where it displays a kanban style board to users
  */

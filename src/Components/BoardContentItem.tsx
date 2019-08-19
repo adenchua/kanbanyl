@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 import { Theme } from '@material-ui/core/styles';
@@ -18,8 +19,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontStyle: 'italic',
     flexGrow: 1,
   },
-  flex: {
-    display: 'flex',
+  label: {
+    borderRadius: 3,
   },
 }));
 
@@ -34,16 +35,17 @@ const BoardContentItem: React.FC = () => {
             <MoreVertIcon />
           </IconButton>
         }
-        subheader="Bugfix role types when displayed on IE is different from other browsers"
+        subheader="Bugfix role types when displayed on IE is different from other browsers."
       />
       <CardContent>
-        <div className={classes.flex}>
-          <Typography variant="caption" className={classes.dateStamp}>
-            18/08/2019
-          </Typography>
-          <Chip color="primary" size="small" avatar={<Avatar>YL</Avatar>} label="You Liang" />
-        </div>
+        <Chip color="default" size="small" label="Front-End" className={classes.label} />
       </CardContent>
+      <CardActions>
+        <Typography variant="caption" className={classes.dateStamp}>
+          18/08/2019
+        </Typography>
+        <Chip color="primary" size="small" avatar={<Avatar>YL</Avatar>} label="You Liang" />
+      </CardActions>
     </Card>
   );
 };
