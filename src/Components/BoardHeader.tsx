@@ -113,7 +113,9 @@ const BoardHeader: React.FC = () => {
             </Popper>
           </Grid>
           <Grid item>
-            <Typography variant="caption">4 Days Remaining</Typography>
+            <Typography variant="caption" color="textSecondary">
+              4 Days Remaining
+            </Typography>
           </Grid>
           <Grid item className={classes.sprintButton}>
             <Button variant="contained" color="primary">

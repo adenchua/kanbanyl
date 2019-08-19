@@ -41,7 +41,7 @@ const BoardContentItem: React.FC = () => {
         <Chip color="default" size="small" label="Front-End" className={classes.label} />
       </CardContent>
       <CardActions>
-        <Typography variant="caption" className={classes.dateStamp}>
+        <Typography variant="caption" className={classes.dateStamp} color="textSecondary">
           18/08/2019
         </Typography>
         <Chip color="primary" size="small" avatar={<Avatar>YL</Avatar>} label="You Liang" />
