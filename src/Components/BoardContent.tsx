@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { Theme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
-import BoardContentItem from '../Components/BoardContentItem';
+import { Link as RouterLink } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import blueGrey from '@material-ui/core/colors/blueGrey';
@@ -33,9 +33,7 @@ const BoardContent: React.FC = () => {
           <Typography className={classes.mb} color="primary" variant="subtitle2">
             TO DO 2
           </Typography>
-          <BoardContentItem />
-          <BoardContentItem />
-          <Button fullWidth variant="contained" color="secondary">
+          <Button fullWidth variant="contained" color="secondary" component={RouterLink} to="/create">
             Create User Story
           </Button>
         </Paper>
@@ -45,7 +43,6 @@ const BoardContent: React.FC = () => {
           <Typography className={classes.mb} color="primary" variant="subtitle2">
             IN PROGRESS 1
           </Typography>
-          <BoardContentItem />
         </Paper>
       </Grid>
       <Grid item xs={3} className={classes.gridItem}>
@@ -53,7 +50,6 @@ const BoardContent: React.FC = () => {
           <Typography className={classes.mb} color="primary" variant="subtitle2">
             TO REVIEW 1
           </Typography>
-          <BoardContentItem />
         </Paper>
       </Grid>
       <Grid item xs={3} className={classes.gridItem}>
@@ -61,7 +57,6 @@ const BoardContent: React.FC = () => {
           <Typography className={classes.mb} color="primary" variant="subtitle2">
             COMPLETED 1
           </Typography>
-          <BoardContentItem />
         </Paper>
       </Grid>
     </Grid>

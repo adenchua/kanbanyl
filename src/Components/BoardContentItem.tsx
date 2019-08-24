@@ -35,7 +35,7 @@ const BoardContentItem: React.FC = () => {
             <MoreVertIcon />
           </IconButton>
         }
-        subheader="Bugfix role types when displayed on IE is different from other browsers."
+        subheader="One thing Twitter didn’t measure was the use of threading, which seems to be the more popular way today of expressing longer thoughts. Well!"
       />
       <CardContent>
         <Chip color="default" size="small" label="Front-End" className={classes.label} />

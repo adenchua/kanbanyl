@@ -11,8 +11,11 @@ import makeStyles from '@material-ui/styles/makeStyles';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import WidgetsIcon from '@material-ui/icons/WidgetsRounded';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import AccountBoxIcon from '@material-ui/icons/AccountBoxRounded';
 import ExitIcon from '@material-ui/icons/ExitToAppRounded';
 import Avatar from '@material-ui/core/Avatar';
+import firebase from 'firebase';
+import { Link as RouterLink } from 'react-router-dom';
 
 /**
  * Returns a sidebar component which stores navigation details, logout button for users
@@ -40,6 +43,21 @@ const useStyles = makeStyles(theme => ({
 const SideBar = () => {
   const classes = useStyles();
 
+  const handleLogout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(
+        function() {
+          //sign-out successful
+        },
+        function(error) {
+          //an error occured
+          alert('Sorry, something went wrong, please try again');
+        }
+      );
+  };
+
   return (
     <div className={classes.root}>
       <Drawer variant="permanent" anchor="left" className={classes.drawer} classes={{ paper: classes.drawerPaper }}>
@@ -55,7 +73,7 @@ const SideBar = () => {
           <Divider />
         </List>
         <List subheader={<ListSubheader>View</ListSubheader>}>
-          <ListItem button>
+          <ListItem button component={RouterLink} to="/board">
             <ListItemIcon>
               <DashBoardIcon />
             </ListItemIcon>
@@ -70,7 +88,13 @@ const SideBar = () => {
           <Divider />
         </List>
         <List subheader={<ListSubheader>Account</ListSubheader>}>
-          <ListItem button>
+          <ListItem button component={RouterLink} to="/profile">
+            <ListItemIcon>
+              <AccountBoxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
+          </ListItem>
+          <ListItem button onClick={handleLogout}>
             <ListItemIcon>
               <ExitIcon />
             </ListItemIcon>
