@@ -15,7 +15,7 @@ import AccountBoxIcon from '@material-ui/icons/AccountBoxRounded';
 import ExitIcon from '@material-ui/icons/ExitToAppRounded';
 import Avatar from '@material-ui/core/Avatar';
 import firebase from 'firebase';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, withRouter } from 'react-router-dom';
 
 /**
  * Returns a sidebar component which stores navigation details, logout button for users
@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SideBar = () => {
+const SideBar = (props: any) => {
   const classes = useStyles();
 
   const handleLogout = () => {
@@ -50,6 +50,7 @@ const SideBar = () => {
       .then(
         function() {
           //sign-out successful
+          props.history.push('/');
         },
         function(error) {
           //an error occured
@@ -106,4 +107,4 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+export default withRouter(SideBar);

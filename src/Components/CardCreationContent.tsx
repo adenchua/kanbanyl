@@ -5,12 +5,13 @@ import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import { withRouter } from 'react-router-dom';
 import firebase from 'firebase';
 import { createUserStory } from '../Api/userStoryApi';
 
-const CardCreationContent = () => {
+const CardCreationContent = (props: any) => {
   const [content, setContent] = React.useState<string>('');
-  const [label, setLabel] = React.useState<string>('none');
+  const [label, setLabel] = React.useState<string>('Team 1');
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -19,7 +20,7 @@ const CardCreationContent = () => {
       let displayName = user.displayName ? user.displayName : 'Anonymous';
       let userId = user.uid;
       createUserStory(content, userId, label, displayName);
-      console.log('card created!');
+      props.history.push('/board');
     }
   };
   return (
@@ -51,10 +52,9 @@ const CardCreationContent = () => {
           fullWidth
           variant="outlined"
         >
-          <MenuItem value="none">None</MenuItem>
-          <MenuItem value="Front-End">Front-End</MenuItem>
-          <MenuItem value="Back-End">Back-End</MenuItem>
-          <MenuItem value="Machine Learning">Machine Learning</MenuItem>
+          <MenuItem value="Team 1">Team 1</MenuItem>
+          <MenuItem value="Team 2">Team 2</MenuItem>
+          <MenuItem value="Team 3">Team 3</MenuItem>
         </TextField>
         <Grid container justify="flex-end">
           <Button type="submit" variant="contained" color="primary">
@@ -66,4 +66,4 @@ const CardCreationContent = () => {
   );
 };
 
-export default CardCreationContent;
+export default withRouter(CardCreationContent);

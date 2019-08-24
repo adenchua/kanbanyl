@@ -15,6 +15,7 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
+import Hidden from '@material-ui/core/Hidden';
 
 const useStyles = makeStyles((theme: Theme) => ({
   sprintButton: {
@@ -117,11 +118,13 @@ const BoardHeader: React.FC = () => {
               4 Days Remaining
             </Typography>
           </Grid>
-          <Grid item className={classes.sprintButton}>
-            <Button variant="contained" color="primary">
-              New Sprint
-            </Button>
-          </Grid>
+          <Hidden xsDown>
+            <Grid item className={classes.sprintButton}>
+              <Button variant="contained" color="primary">
+                New Sprint
+              </Button>
+            </Grid>
+          </Hidden>
         </Grid>
       </Grid>
 

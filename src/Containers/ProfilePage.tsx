@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import firebase from 'firebase';
 import { Link as RouterLink } from 'react-router-dom';
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme: Theme) => ({
   mt: {
@@ -15,6 +16,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   mr: {
     marginRight: theme.spacing(2),
+  },
+  paper: {
+    padding: 20,
   },
 }));
 
@@ -55,38 +59,40 @@ const ProfilePage = () => {
 
   return (
     <Container maxWidth="md" className={classes.mt}>
-      <Typography variant="h6" paragraph color="primary">
-        Update Profile Information
-      </Typography>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          label="Display Name"
-          variant="outlined"
-          onChange={e => setDisplayNameInput(e.target.value)}
-          value={displayNameInput}
-          inputProps={{ maxLength: 12 }}
-          helperText={`${12 - displayNameInput.length} characters remaining`}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Avatar URL"
-          variant="outlined"
-          value={photoURLInput}
-          helperText="This will be displayed on all your posts"
-          onChange={e => setPhotoURLInput(e.target.value)}
-          fullWidth
-          margin="normal"
-        />
-        <Grid container justify="flex-end" className={classes.mt}>
-          <Button variant="outlined" color="primary" className={classes.mr} component={RouterLink} to="/board">
-            Cancel
-          </Button>
-          <Button type="submit" color="primary" variant="contained">
-            Update Profile
-          </Button>
-        </Grid>
-      </form>
+      <Paper className={classes.paper}>
+        <Typography variant="h6" paragraph color="primary">
+          Update Profile Information
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            label="Display Name"
+            variant="outlined"
+            onChange={e => setDisplayNameInput(e.target.value)}
+            value={displayNameInput}
+            inputProps={{ maxLength: 12 }}
+            helperText={`${12 - displayNameInput.length} characters remaining`}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Avatar URL"
+            variant="outlined"
+            value={photoURLInput}
+            helperText="This will be displayed on all your posts"
+            onChange={e => setPhotoURLInput(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <Grid container justify="flex-end" className={classes.mt}>
+            <Button variant="outlined" color="primary" className={classes.mr} component={RouterLink} to="/board">
+              Cancel
+            </Button>
+            <Button type="submit" color="primary" variant="contained">
+              Update Profile
+            </Button>
+          </Grid>
+        </form>
+      </Paper>
     </Container>
   );
 };

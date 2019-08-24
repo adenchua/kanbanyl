@@ -32,20 +32,3 @@ export const createUserStory = (
     date: Date.now(),
   });
 };
-
-//retrieves all user stories based on sprint
-export const retrieveUserStories = (sprintNumber: number = 1) => {
-  let list: UserStory[] = [];
-  var dbRef = db.ref('stories/');
-  dbRef.on('value', function(snapshot) {
-    snapshot.forEach(function(childSnapshot) {
-      var childKey = childSnapshot.key;
-      var childData = childSnapshot.val();
-      childData['key'] = childKey;
-      if (childData.sprintNumber === sprintNumber) {
-        list.push(childData);
-      }
-    });
-    return list;
-  });
-};

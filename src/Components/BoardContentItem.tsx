@@ -8,8 +8,8 @@ import { Theme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
+import { UserStory } from '../Api/userStoryApi';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -24,8 +24,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const BoardContentItem: React.FC = () => {
+const BoardContentItem: React.FC<{ userStoryDetails: UserStory }> = props => {
   const classes = useStyles();
+  const { userStoryDetails } = props;
+  const { content, label, date, displayName } = userStoryDetails;
 
   return (
     <Card className={classes.root}>
@@ -35,16 +37,16 @@ const BoardContentItem: React.FC = () => {
             <MoreVertIcon />
           </IconButton>
         }
-        subheader="One thing Twitter didn’t measure was the use of threading, which seems to be the more popular way today of expressing longer thoughts. Well!"
+        subheader={content}
       />
       <CardContent>
-        <Chip color="default" size="small" label="Front-End" className={classes.label} />
+        <Chip color="default" size="small" label={label} className={classes.label} />
       </CardContent>
       <CardActions>
         <Typography variant="caption" className={classes.dateStamp} color="textSecondary">
-          18/08/2019
+          {new Date(date).toLocaleDateString()}
         </Typography>
-        <Chip color="primary" size="small" avatar={<Avatar>YL</Avatar>} label="You Liang" />
+        <Chip color="primary" size="small" label={displayName} className={classes.label} />
       </CardActions>
     </Card>
   );
