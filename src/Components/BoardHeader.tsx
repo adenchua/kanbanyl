@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
-    width: 400,
   },
   input: {
     marginLeft: 8,
@@ -115,7 +114,7 @@ const BoardHeader: React.FC = () => {
           </Grid>
           <Grid item>
             <Typography variant="caption" color="textSecondary">
-              4 Days Remaining
+              0 Days Remaining
             </Typography>
           </Grid>
           <Hidden xsDown>

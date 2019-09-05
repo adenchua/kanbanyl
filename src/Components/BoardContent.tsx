@@ -57,7 +57,7 @@ const BoardContent: React.FC = () => {
 
   return (
     <Grid container direction="row" justify="space-between">
-      <Grid item xs={12} sm={3} className={classes.gridItem}>
+      <Grid item xs={12} md={3} className={classes.gridItem}>
         <Paper className={classes.paper}>
           <Typography className={classes.mb} color="primary" variant="subtitle2">
             {`TO DO ${userStoryStore.getTodoUserStories.length}`}
@@ -77,7 +77,7 @@ const BoardContent: React.FC = () => {
           </Button>
         </Paper>
       </Grid>
-      <Grid item xs={12} sm={3} className={classes.gridItem}>
+      <Grid item xs={12} md={3} className={classes.gridItem}>
         <Paper className={classes.paper}>
           <Typography className={classes.mb} color="primary" variant="subtitle2">
             {`IN PROGRESS ${userStoryStore.getInProgressUserStories.length}`}
@@ -87,7 +87,7 @@ const BoardContent: React.FC = () => {
           })}
         </Paper>
       </Grid>
-      <Grid item xs={12} sm={3} className={classes.gridItem}>
+      <Grid item xs={12} md={3} className={classes.gridItem}>
         <Paper className={classes.paper}>
           <Typography className={classes.mb} color="primary" variant="subtitle2">
             {`TO REVIEW ${userStoryStore.getToReviewUserStories.length}`}
@@ -97,7 +97,7 @@ const BoardContent: React.FC = () => {
           })}
         </Paper>
       </Grid>
-      <Grid item xs={12} sm={3} className={classes.gridItem}>
+      <Grid item xs={12} md={3} className={classes.gridItem}>
         <Paper className={classes.paper}>
           <Typography className={classes.mb} color="primary" variant="subtitle2">
             {`COMPLETED ${userStoryStore.getCompletedUserStories.length}`}
