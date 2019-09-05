@@ -15,6 +15,7 @@ import AccountBoxIcon from '@material-ui/icons/AccountBoxRounded';
 import ExitIcon from '@material-ui/icons/ExitToAppRounded';
 import Avatar from '@material-ui/core/Avatar';
 import firebase from 'firebase';
+import Hidden from '@material-ui/core/Hidden';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 
 /**
@@ -60,50 +61,52 @@ const SideBar = (props: any) => {
   };
 
   return (
-    <div className={classes.root}>
-      <Drawer variant="permanent" anchor="left" className={classes.drawer} classes={{ paper: classes.drawerPaper }}>
-        <List>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar className={classes.avatar}>
-                <WidgetsIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="kanbanyl" secondary="beta release" />
-          </ListItem>
-          <Divider />
-        </List>
-        <List subheader={<ListSubheader>Navigation</ListSubheader>}>
-          <ListItem button component={RouterLink} to="/board">
-            <ListItemIcon>
-              <DashBoardIcon />
-            </ListItemIcon>
-            <ListItemText>Agile Board</ListItemText>
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <BugIcon />
-            </ListItemIcon>
-            <ListItemText>Issues</ListItemText>
-          </ListItem>
-          <Divider />
-        </List>
-        <List subheader={<ListSubheader>Account</ListSubheader>}>
-          <ListItem button component={RouterLink} to="/profile">
-            <ListItemIcon>
-              <AccountBoxIcon />
-            </ListItemIcon>
-            <ListItemText primary="Profile" />
-          </ListItem>
-          <ListItem button onClick={handleLogout}>
-            <ListItemIcon>
-              <ExitIcon />
-            </ListItemIcon>
-            <ListItemText primary="Logout" />
-          </ListItem>
-        </List>
-      </Drawer>
-    </div>
+    <Hidden xsDown>
+      <div className={classes.root}>
+        <Drawer variant="permanent" anchor="left" className={classes.drawer} classes={{ paper: classes.drawerPaper }}>
+          <List>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar className={classes.avatar}>
+                  <WidgetsIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary="kanbanyl" secondary="beta release" />
+            </ListItem>
+            <Divider />
+          </List>
+          <List subheader={<ListSubheader>Navigation</ListSubheader>}>
+            <ListItem button component={RouterLink} to="/board">
+              <ListItemIcon>
+                <DashBoardIcon />
+              </ListItemIcon>
+              <ListItemText>Agile Board</ListItemText>
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <BugIcon />
+              </ListItemIcon>
+              <ListItemText>Issues</ListItemText>
+            </ListItem>
+            <Divider />
+          </List>
+          <List subheader={<ListSubheader>Account</ListSubheader>}>
+            <ListItem button component={RouterLink} to="/profile">
+              <ListItemIcon>
+                <AccountBoxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Profile" />
+            </ListItem>
+            <ListItem button onClick={handleLogout}>
+              <ListItemIcon>
+                <ExitIcon />
+              </ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItem>
+          </List>
+        </Drawer>
+      </div>
+    </Hidden>
   );
 };
 

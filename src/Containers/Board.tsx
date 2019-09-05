@@ -4,8 +4,7 @@ import BoardHeader from '../Components/BoardHeader';
 import BoardContent from '../Components/BoardContent';
 import { makeStyles } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles';
-import Hidden from '@material-ui/core/Hidden';
-
+import firebase from 'firebase';
 /**
  * Returns a page where it displays a kanban style board to users
  */
@@ -17,13 +16,33 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const Board: React.FC = () => {
+const Board: React.FC = (props: any) => {
+  React.useEffect(() => {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in. Do nothing
+      } else {
+        handleLogout(); //logsout user
+      }
+    });
+  });
+
+  const handleLogout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        props.history.push('/');
+        window.localStorage.clear(); //clear local storage
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
   const classes = useStyles();
   return (
     <div style={{ display: 'flex' }}>
-      <Hidden xsDown>
-        <SideBar />
-      </Hidden>
+      <SideBar />
       <div className={classes.root}>
         <BoardHeader />
         <BoardContent />
