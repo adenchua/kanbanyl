@@ -73,7 +73,7 @@ const SideBar = (props: any) => {
           </ListItem>
           <Divider />
         </List>
-        <List subheader={<ListSubheader>View</ListSubheader>}>
+        <List subheader={<ListSubheader>Navigation</ListSubheader>}>
           <ListItem button component={RouterLink} to="/board">
             <ListItemIcon>
               <DashBoardIcon />

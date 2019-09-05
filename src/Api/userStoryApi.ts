@@ -32,3 +32,32 @@ export const createUserStory = (
     date: Date.now(),
   });
 };
+
+//moves a user story card from one phase to another
+export const moveUserStory = (
+  content: string,
+  userId: string,
+  label: any,
+  displayName: string,
+  sprintNumber: number,
+  newPhase: string,
+  date: number,
+  cardId: any
+) => {
+  db.ref('stories/' + cardId).set({
+    phase: newPhase,
+    content,
+    userId,
+    label,
+    displayName,
+    sprintNumber,
+    date,
+  });
+};
+
+//deletes a user story card from the database
+export const deleteUserStory = (cardId: any) => {
+  db.ref('stories')
+    .child(cardId)
+    .remove();
+};
