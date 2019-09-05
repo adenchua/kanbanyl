@@ -27,6 +27,7 @@ const ProfilePage = () => {
     var user = firebase.auth().currentUser;
     if (user != null && user.displayName !== null) {
       setDisplayNameInput(user.displayName);
+      setDisabledOptions(true);
     }
     if (user != null && user.photoURL !== null) {
       setPhotoURLInput(user.photoURL);
@@ -36,6 +37,7 @@ const ProfilePage = () => {
   const classes = useStyles();
   const [displayNameInput, setDisplayNameInput] = React.useState<string>('');
   const [photoURLInput, setPhotoURLInput] = React.useState<string>('');
+  const [disabledOptions, setDisabledOptions] = React.useState<boolean>(false);
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -73,6 +75,7 @@ const ProfilePage = () => {
             helperText={`${12 - displayNameInput.length} characters remaining`}
             fullWidth
             margin="normal"
+            disabled={disabledOptions}
           />
           <TextField
             label="Avatar URL"
@@ -82,12 +85,13 @@ const ProfilePage = () => {
             onChange={e => setPhotoURLInput(e.target.value)}
             fullWidth
             margin="normal"
+            disabled
           />
           <Grid container justify="flex-end" className={classes.mt}>
             <Button variant="outlined" color="primary" className={classes.mr} component={RouterLink} to="/board">
               Cancel
             </Button>
-            <Button type="submit" color="primary" variant="contained">
+            <Button type="submit" color="primary" variant="contained" disabled={disabledOptions}>
               Update Profile
             </Button>
           </Grid>

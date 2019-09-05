@@ -1,6 +1,5 @@
 import * as React from 'react';
 import SideBar from '../Components/SideBar';
-import Container from '@material-ui/core/Container';
 import BoardHeader from '../Components/BoardHeader';
 import BoardContent from '../Components/BoardContent';
 import { makeStyles } from '@material-ui/styles';
@@ -25,10 +24,10 @@ const Board: React.FC = () => {
       <Hidden xsDown>
         <SideBar />
       </Hidden>
-      <Container className={classes.root} maxWidth="xl">
+      <div className={classes.root}>
         <BoardHeader />
         <BoardContent />
-      </Container>
+      </div>
     </div>
   );
 };

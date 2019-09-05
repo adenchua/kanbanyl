@@ -28,8 +28,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const BoardContent: React.FC = () => {
   const classes = useStyles();
+  const [disableButton, setDisableButton] = React.useState<boolean>(false); //disables button for card creation if user does not have display name
   React.useEffect(() => {
     retrieveUserStories(); //on mount, retrieves all user stories with default sprint 1
+    var user = firebase.auth().currentUser;
+    if (user != null && user.displayName === null) {
+      setDisableButton(true); //disables card creation button
+    }
   }, []);
 
   //retrieves all user stories based on sprint and updates the UserStoryStore with the new list
@@ -60,7 +65,14 @@ const BoardContent: React.FC = () => {
           {userStoryStore.getTodoUserStories.map(userStoryDetails => {
             return <BoardContentItem userStoryDetails={userStoryDetails} key={userStoryDetails.key} />;
           })}
-          <Button fullWidth variant="contained" color="secondary" component={RouterLink} to="/create">
+          <Button
+            fullWidth
+            variant="contained"
+            color="secondary"
+            component={RouterLink}
+            to="/create"
+            disabled={disableButton}
+          >
             Create User Story
           </Button>
         </Paper>
