@@ -8,6 +8,7 @@ import blueGrey from '@material-ui/core/colors/blueGrey';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import orange from '@material-ui/core/colors/orange';
 import UserStoryStore from './stores/UserStoryStore';
+import IssueStore from './stores/IssueStore';
 
 let theme = createMuiTheme({
   palette: {
@@ -19,6 +20,7 @@ let theme = createMuiTheme({
 theme = responsiveFontSizes(theme);
 
 export const userStoryStore = new UserStoryStore();
+export const issueStore = new IssueStore();
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>

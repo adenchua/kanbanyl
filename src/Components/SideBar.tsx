@@ -82,7 +82,7 @@ const SideBar = (props: any) => {
               </ListItemIcon>
               <ListItemText>Agile Board</ListItemText>
             </ListItem>
-            <ListItem button>
+            <ListItem button component={RouterLink} to="/issues">
               <ListItemIcon>
                 <BugIcon />
               </ListItemIcon>
