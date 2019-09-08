@@ -15,7 +15,7 @@ import { createUserStory } from '../api/userStoryApi';
 
 const CardCreationContent = (props: any) => {
   const [content, setContent] = React.useState<string>('');
-  const [label, setLabel] = React.useState<string>('None');
+  const [label, setLabel] = React.useState<string>('Team 1');
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -56,13 +56,13 @@ const CardCreationContent = (props: any) => {
           fullWidth
           variant="outlined"
         >
-          <MenuItem value="Frontend">Frontend</MenuItem>
-          <MenuItem value="Backend">Backend</MenuItem>
           <MenuItem value="Team 1">Team 1</MenuItem>
           <MenuItem value="Team 2">Team 2</MenuItem>
           <MenuItem value="Team 3">Team 3</MenuItem>
           <MenuItem value="Team 4">Team 4</MenuItem>
           <MenuItem value="Team 5">Team 5</MenuItem>
+          <MenuItem value="Frontend">Frontend</MenuItem>
+          <MenuItem value="Backend">Backend</MenuItem>
         </TextField>
         <Grid container justify="flex-end">
           <Button type="submit" variant="contained" color="primary">

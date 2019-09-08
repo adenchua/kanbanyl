@@ -63,8 +63,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const BoardHeader: React.FC = () => {
   const classes = useStyles();
-  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
-  const [newSprintInput, setNewSprintInput] = React.useState<string>('');
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false); //modal for new sprint
+  const [newSprintInput, setNewSprintInput] = React.useState<string>(''); //user input to match 'NEWSPRINT', this affects the 'confirm' button
+  const [searchInput, setSearchInput] = React.useState<string>(''); //user input for search
 
   React.useEffect(() => {
     retrieveSprintDuration(); //on mount, retrieves sprint duration
@@ -94,6 +95,11 @@ const BoardHeader: React.FC = () => {
     });
   };
 
+  //updates the user input for search in the user story store and applies user story filtering based on keywords
+  const handleSearchClick = () => {
+    userStoryStore.setUserStoryContentFilter(searchInput); //updates store with search input and apply filtering
+  };
+
   return (
     <Grid container>
       <Grid item className={classes.searchContainer}>
@@ -102,17 +108,22 @@ const BoardHeader: React.FC = () => {
             <Paper className={classes.searchBar}>
               <InputBase
                 className={classes.input}
-                placeholder="Search User Stories"
-                inputProps={{ 'aria-label': 'search user stories' }}
+                placeholder="Search Keywords"
+                onChange={e => setSearchInput(e.target.value)}
               />
               <Divider className={classes.divider} />
-              <IconButton className={classes.iconButton} aria-label="search" color="primary">
+              <IconButton
+                className={classes.iconButton}
+                aria-label="search"
+                color="primary"
+                onClick={handleSearchClick}
+              >
                 <SearchIcon />
               </IconButton>
             </Paper>
           </Grid>
           <Grid item>
-            <Button variant="text" color="primary" className={classes.ml}>
+            <Button variant="text" color="primary" className={classes.ml} disabled>
               Filter
             </Button>
           </Grid>

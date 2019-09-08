@@ -12,6 +12,7 @@ import firebase from 'firebase';
 import { UserStoryType } from '../api/userStoryApi';
 import { userStoryStore } from '../index';
 import { observer } from 'mobx-react';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 /**
  * Returns the content of a Boardpage, which includes the four main phase containers to store user stories
@@ -33,6 +34,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const BoardContent: React.FC = () => {
   const classes = useStyles();
   const [disableButton, setDisableButton] = React.useState<boolean>(false); //disables button for card creation if user does not have display name
+  const [loading, setLoading] = React.useState<boolean>(true); //loading results
 
   React.useEffect(() => {
     retrieveUserStories(); //on mount, retrieves all user stories
@@ -55,6 +57,7 @@ const BoardContent: React.FC = () => {
         list.push(childData);
       });
       userStoryStore.setUserStoryList(list); //set store with list
+      setLoading(false); //stops loading progress
       list = []; //resets list
     });
   };
@@ -66,9 +69,11 @@ const BoardContent: React.FC = () => {
           <Typography className={classes.mb} color="primary" variant="subtitle2">
             {`TO DO ${userStoryStore.getTodoUserStories.length}`}
           </Typography>
-          {userStoryStore.getTodoUserStories.map(userStoryDetails => {
-            return <BoardContentItem userStoryDetails={userStoryDetails} key={userStoryDetails.key} />;
-          })}
+          {loading && <CircularProgress />}
+          {!loading &&
+            userStoryStore.getTodoUserStories.map(userStoryDetails => {
+              return <BoardContentItem userStoryDetails={userStoryDetails} key={userStoryDetails.key} />;
+            })}
           <Button
             fullWidth
             variant="contained"
@@ -86,9 +91,11 @@ const BoardContent: React.FC = () => {
           <Typography className={classes.mb} color="primary" variant="subtitle2">
             {`IN PROGRESS ${userStoryStore.getInProgressUserStories.length}`}
           </Typography>
-          {userStoryStore.getInProgressUserStories.map(userStoryDetails => {
-            return <BoardContentItem userStoryDetails={userStoryDetails} key={userStoryDetails.key} />;
-          })}
+          {loading && <CircularProgress />}
+          {!loading &&
+            userStoryStore.getInProgressUserStories.map(userStoryDetails => {
+              return <BoardContentItem userStoryDetails={userStoryDetails} key={userStoryDetails.key} />;
+            })}
         </Paper>
       </Grid>
       <Grid item xs={12} md={3} className={classes.gridItem}>
@@ -96,9 +103,11 @@ const BoardContent: React.FC = () => {
           <Typography className={classes.mb} color="primary" variant="subtitle2">
             {`TO REVIEW ${userStoryStore.getToReviewUserStories.length}`}
           </Typography>
-          {userStoryStore.getToReviewUserStories.map(userStoryDetails => {
-            return <BoardContentItem userStoryDetails={userStoryDetails} key={userStoryDetails.key} />;
-          })}
+          {loading && <CircularProgress />}
+          {!loading &&
+            userStoryStore.getToReviewUserStories.map(userStoryDetails => {
+              return <BoardContentItem userStoryDetails={userStoryDetails} key={userStoryDetails.key} />;
+            })}
         </Paper>
       </Grid>
       <Grid item xs={12} md={3} className={classes.gridItem}>
@@ -106,9 +115,11 @@ const BoardContent: React.FC = () => {
           <Typography className={classes.mb} color="primary" variant="subtitle2">
             {`COMPLETED ${userStoryStore.getCompletedUserStories.length}`}
           </Typography>
-          {userStoryStore.getCompletedUserStories.map(userStoryDetails => {
-            return <BoardContentItem userStoryDetails={userStoryDetails} key={userStoryDetails.key} />;
-          })}
+          {loading && <CircularProgress />}
+          {!loading &&
+            userStoryStore.getCompletedUserStories.map(userStoryDetails => {
+              return <BoardContentItem userStoryDetails={userStoryDetails} key={userStoryDetails.key} />;
+            })}
         </Paper>
       </Grid>
     </Grid>

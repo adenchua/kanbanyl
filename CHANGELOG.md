@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added feature to delete a use story
 - Added feature to reset sprint
 - Added sprint duration to be shown on the top of the header in boardpage
+- Added loading progress bar when loading the content page
+- Added keyword search to filter user stories based on content match
+- Added info message if logged in user does not have a profile display name
 
 ### CHANGED:
 

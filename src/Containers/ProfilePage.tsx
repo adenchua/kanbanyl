@@ -58,6 +58,7 @@ const ProfilePage = () => {
         })
         .then(function() {
           //update successful
+          setDisabledOptions(true); //disables further change
           alert('User Profile Updated!');
         })
         .catch(function(error) {
@@ -82,6 +83,7 @@ const ProfilePage = () => {
             helperText={`${12 - displayNameInput.length} characters remaining`}
             fullWidth
             margin="normal"
+            required
             disabled={disabledOptions}
           />
           <TextField

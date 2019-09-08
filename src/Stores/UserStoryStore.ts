@@ -4,10 +4,17 @@ import { UserStoryType } from '../api/userStoryApi';
 class UserStoryStore {
   userStoryList: UserStoryType[];
   sprintDuration: number;
+  userStoryContentFilter: string;
   constructor() {
     this.userStoryList = []; //stores the list of user stories
     this.sprintDuration = 0; //remaining sprint duration in milliseconds
+    this.userStoryContentFilter = ''; //search filter for user story content.
   }
+
+  // @action
+  setUserStoryContentFilter = (filter: string) => {
+    this.userStoryContentFilter = filter;
+  };
 
   // @action
   setSprintDuration = (newDuration: number) => {
@@ -31,26 +38,43 @@ class UserStoryStore {
 
   // @computed
   get getTodoUserStories(): UserStoryType[] {
-    return this.userStoryList.filter(userStory => userStory.phase === 'TO-DO');
+    return this.userStoryList.filter(
+      userStory =>
+        userStory.phase === 'TO-DO' &&
+        userStory.content.toLowerCase().indexOf(this.userStoryContentFilter.toLowerCase()) !== -1
+    );
   }
 
   // @computed
   get getInProgressUserStories(): UserStoryType[] {
-    return this.userStoryList.filter(userStory => userStory.phase === 'IN-PROGRESS');
+    return this.userStoryList.filter(
+      userStory =>
+        userStory.phase === 'IN-PROGRESS' &&
+        userStory.content.toLowerCase().indexOf(this.userStoryContentFilter.toLowerCase()) !== -1
+    );
   }
 
   // @computed
   get getToReviewUserStories(): UserStoryType[] {
-    return this.userStoryList.filter(userStory => userStory.phase === 'TO-REVIEW');
+    return this.userStoryList.filter(
+      userStory =>
+        userStory.phase === 'TO-REVIEW' &&
+        userStory.content.toLowerCase().indexOf(this.userStoryContentFilter.toLowerCase()) !== -1
+    );
   }
 
   // @computed
   get getCompletedUserStories(): UserStoryType[] {
-    return this.userStoryList.filter(userStory => userStory.phase === 'COMPLETED');
+    return this.userStoryList.filter(
+      userStory =>
+        userStory.phase === 'COMPLETED' &&
+        userStory.content.toLowerCase().indexOf(this.userStoryContentFilter.toLowerCase()) !== -1
+    );
   }
 }
 
 decorate(UserStoryStore, {
+  userStoryContentFilter: observable,
   sprintDuration: observable,
   userStoryList: observable,
   getRemainingSprintDuration: computed,
@@ -61,6 +85,7 @@ decorate(UserStoryStore, {
   getCompletedUserStories: computed,
   setUserStoryList: action,
   setSprintDuration: action,
+  setUserStoryContentFilter: action,
 });
 
 export default UserStoryStore;
