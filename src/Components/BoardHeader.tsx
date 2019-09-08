@@ -17,6 +17,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import Hidden from '@material-ui/core/Hidden';
 
+/**
+ * Board header used in the board page, which consists of a search bar, toggle sprint number and filter buttons
+ */
+
 const useStyles = makeStyles((theme: Theme) => ({
   sprintButton: {
     marginLeft: theme.spacing(2),

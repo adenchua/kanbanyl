@@ -1,5 +1,5 @@
 import { decorate, action, computed, observable } from 'mobx';
-import { UserStory } from '../Api/userStoryApi';
+import { UserStory } from '../api/userStoryApi';
 
 class UserStoryStore {
   userStoryList: UserStory[];

@@ -1,9 +1,9 @@
 import React from 'react';
-import Board from './Containers/Board';
-import LoginPage from './Containers/LoginPage';
+import Board from './containers/BoardPage';
+import LoginPage from './containers/LoginPage';
 import { BrowserRouter, Route } from 'react-router-dom';
-import CardCreationPage from './Containers/CardCreationPage';
-import ProfilePage from './Containers/ProfilePage';
+import CardCreationPage from './containers/CardCreationPage';
+import ProfilePage from './containers/ProfilePage';
 
 const App: React.FC = () => {
   return (

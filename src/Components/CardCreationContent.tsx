@@ -7,7 +7,11 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { withRouter } from 'react-router-dom';
 import firebase from 'firebase';
-import { createUserStory } from '../Api/userStoryApi';
+import { createUserStory } from '../api/userStoryApi';
+
+/**
+ * Returns a form to create a user story card in the database. Upon success, it redirects the user to the board page
+ */
 
 const CardCreationContent = (props: any) => {
   const [content, setContent] = React.useState<string>('');

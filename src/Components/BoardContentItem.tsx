@@ -11,7 +11,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { UserStory, moveUserStory, deleteUserStory } from '../Api/userStoryApi';
+import { UserStory, moveUserStory, deleteUserStory } from '../api/userStoryApi';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -19,6 +19,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+
+/**
+ * Individual user story card item which displays the details of the card
+ */
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -42,36 +46,44 @@ const BoardContentItem: React.FC<{ userStoryDetails: UserStory }> = props => {
   const [newPhase, setNewPhase] = React.useState<string>('TO-DO'); //stores value of new selected phase
   const [deleteCardMenuOpen, setDeleteCardMenuOpen] = React.useState<boolean>(false); //to handle delete card dialog
 
+  //handles the button click action in the kebab menu to display options
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
 
+  //closes the kebab menu options
   const handleClose = () => {
     setAnchorEl(null);
   };
 
+  //opens a modal for users to move a card from one phase to another
   const handleOpenMoveMenu = () => {
     handleClose(); //closes kebab menu
     setMoveCardMenuOpen(true);
   };
 
+  //closes the modal where users choose to move a card phase
   const handleCloseMoveMenu = () => {
     setMoveCardMenuOpen(false);
   };
 
+  //opens a modal for users to delete a user story
   const handleOpenDeleteMenu = () => {
     handleClose(); //closes kebab menu
     setDeleteCardMenuOpen(true);
   };
 
+  //closes the modal for users to delete a user story
   const handleCloseDeleteMenu = () => {
     setDeleteCardMenuOpen(false);
   };
 
+  //api call to move a card phase based on the new phase selected in the openMoveMenu
   const handleMoveCard = () => {
     moveUserStory(content, userId, label, displayName, sprintNumber, newPhase, date, key);
   };
 
+  //api call to delete a card upon confirmation from the deleteMenu
   const handleDelete = () => {
     deleteUserStory(key);
   };
@@ -95,14 +107,16 @@ const BoardContentItem: React.FC<{ userStoryDetails: UserStory }> = props => {
         </Typography>
         <Chip color="primary" size="small" label={displayName} className={classes.label} />
       </CardActions>
+      {/**Kebab mmenu ot display options for the feature card */}
       <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
         <MenuItem onClick={handleOpenMoveMenu}>Move Card</MenuItem>
         <MenuItem onClick={handleOpenDeleteMenu}>Delete Card</MenuItem>
       </Menu>
+      {/**Menu dialog to prompt user to change card phase */}
       <Dialog open={moveCardMenuOpen} onClose={handleCloseMoveMenu}>
         <DialogTitle>Change Card Phase</DialogTitle>
         <DialogContent>
-          <DialogContentText>Move a card phase from one to another in the same sprint.</DialogContentText>
+          <DialogContentText>Move a card phase within the same sprint.</DialogContentText>
           <TextField
             select
             value={newPhase}
@@ -126,6 +140,7 @@ const BoardContentItem: React.FC<{ userStoryDetails: UserStory }> = props => {
           </Button>
         </DialogActions>
       </Dialog>
+      {/**Menu dialog to confirm user for deletion of user story */}
       <Dialog open={deleteCardMenuOpen} onClose={handleCloseDeleteMenu}>
         <DialogTitle>Confirm Delete?</DialogTitle>
         <DialogActions>

@@ -10,6 +10,11 @@ import firebase from 'firebase';
 import { Link as RouterLink } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 
+/**
+ * Displays the profile page details to the user. This is currently in progress, since
+ * users who already filled in their display names cannot update their profile
+ */
+
 const useStyles = makeStyles((theme: Theme) => ({
   mt: {
     marginTop: theme.spacing(5),
@@ -23,6 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const ProfilePage = () => {
+  //on component mount, sets the user's display name and photo URL if any on the fields
   React.useEffect(() => {
     var user = firebase.auth().currentUser;
     if (user != null && user.displayName !== null) {
@@ -35,10 +41,11 @@ const ProfilePage = () => {
   }, []);
 
   const classes = useStyles();
-  const [displayNameInput, setDisplayNameInput] = React.useState<string>('');
-  const [photoURLInput, setPhotoURLInput] = React.useState<string>('');
-  const [disabledOptions, setDisabledOptions] = React.useState<boolean>(false);
+  const [displayNameInput, setDisplayNameInput] = React.useState<string>(''); //display name input
+  const [photoURLInput, setPhotoURLInput] = React.useState<string>(''); //photo url input
+  const [disabledOptions, setDisabledOptions] = React.useState<boolean>(false); //state to disable textfield and update button
 
+  //handles submit form for users to update the display name and photo URL. Upon success, renders an alert message
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     var user = firebase.auth().currentUser;

@@ -10,6 +10,11 @@ import WidgetIcon from '@material-ui/icons/WidgetsRounded';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, Theme } from '@material-ui/core';
 
+/**
+ * Contains the login page for the users to sign in with an email and a password. Upon success,
+ * it redirects the user to the board page.
+ */
+
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: '100vh',
@@ -44,9 +49,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const LoginPage = (props: { history: string[] }) => {
   const classes = useStyles({}); //Material UI CSS Style
-  const [email, setEmail] = React.useState<string>('');
-  const [password, setPassword] = React.useState<string>('');
-  const [showError, setShowError] = React.useState<boolean>(false);
+  const [email, setEmail] = React.useState<string>(''); //state to store email input
+  const [password, setPassword] = React.useState<string>(''); //state to store password input
+  const [showError, setShowError] = React.useState<boolean>(false); //state to show error message should login fail
 
   // performs handle submit of the login form. Calls Firebase's auth sign in with email and password method.
   // Upon successful login, redirects user to another page
@@ -62,7 +67,7 @@ const LoginPage = (props: { history: string[] }) => {
           console.log(user.displayName);
           console.log(user.photoURL);
         }
-        props.history.push('/board'); //redirects to kanban-board page
+        props.history.push('/board'); //redirects to BoardPage
       })
       .catch(error => {
         setShowError(true); //display error

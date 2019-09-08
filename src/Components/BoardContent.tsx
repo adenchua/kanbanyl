@@ -9,9 +9,13 @@ import Button from '@material-ui/core/Button';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import BoardContentItem from './BoardContentItem';
 import firebase from 'firebase';
-import { UserStory } from '../Api/userStoryApi';
+import { UserStory } from '../api/userStoryApi';
 import { userStoryStore } from '../index';
 import { observer } from 'mobx-react';
+
+/**
+ * Returns the content of a Boardpage, which includes the four main phase containers to store user stories
+ */
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
@@ -29,6 +33,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const BoardContent: React.FC = () => {
   const classes = useStyles();
   const [disableButton, setDisableButton] = React.useState<boolean>(false); //disables button for card creation if user does not have display name
+
   React.useEffect(() => {
     retrieveUserStories(); //on mount, retrieves all user stories with default sprint 1
     var user = firebase.auth().currentUser;
