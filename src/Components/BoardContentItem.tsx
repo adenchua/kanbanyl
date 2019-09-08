@@ -11,7 +11,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { UserStory, moveUserStory, deleteUserStory } from '../api/userStoryApi';
+import { UserStoryType, moveUserStory, deleteUserStory } from '../api/userStoryApi';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -37,10 +37,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const BoardContentItem: React.FC<{ userStoryDetails: UserStory }> = props => {
+const BoardContentItem: React.FC<{ userStoryDetails: UserStoryType }> = props => {
   const classes = useStyles();
   const { userStoryDetails } = props;
-  const { content, label, date, displayName, key, sprintNumber, userId } = userStoryDetails;
+  const { content, label, date, displayName, key, userId } = userStoryDetails;
   const [anchorEl, setAnchorEl] = React.useState(null); //to handle kebab menu
   const [moveCardMenuOpen, setMoveCardMenuOpen] = React.useState<boolean>(false); //to handle move card dialog
   const [newPhase, setNewPhase] = React.useState<string>('TO-DO'); //stores value of new selected phase
@@ -80,7 +80,7 @@ const BoardContentItem: React.FC<{ userStoryDetails: UserStory }> = props => {
 
   //api call to move a card phase based on the new phase selected in the openMoveMenu
   const handleMoveCard = () => {
-    moveUserStory(content, userId, label, displayName, sprintNumber, newPhase, date, key);
+    moveUserStory(content, userId, label, displayName, newPhase, date, key);
   };
 
   //api call to delete a card upon confirmation from the deleteMenu
@@ -116,7 +116,7 @@ const BoardContentItem: React.FC<{ userStoryDetails: UserStory }> = props => {
       <Dialog open={moveCardMenuOpen} onClose={handleCloseMoveMenu}>
         <DialogTitle>Change Card Phase</DialogTitle>
         <DialogContent>
-          <DialogContentText>Move a card phase within the same sprint.</DialogContentText>
+          <DialogContentText>Move a card phase</DialogContentText>
           <TextField
             select
             value={newPhase}

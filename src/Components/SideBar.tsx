@@ -71,7 +71,7 @@ const SideBar = (props: any) => {
                   <WidgetsIcon />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary="kanbanyl" secondary="beta release" />
+              <ListItemText primary="kanbanyl" secondary="v.0.2" />
             </ListItem>
             <Divider />
           </List>

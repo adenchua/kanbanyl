@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import BoardContentItem from './BoardContentItem';
 import firebase from 'firebase';
-import { UserStory } from '../api/userStoryApi';
+import { UserStoryType } from '../api/userStoryApi';
 import { userStoryStore } from '../index';
 import { observer } from 'mobx-react';
 
@@ -35,25 +35,24 @@ const BoardContent: React.FC = () => {
   const [disableButton, setDisableButton] = React.useState<boolean>(false); //disables button for card creation if user does not have display name
 
   React.useEffect(() => {
-    retrieveUserStories(); //on mount, retrieves all user stories with default sprint 1
+    retrieveUserStories(); //on mount, retrieves all user stories
+
     var user = firebase.auth().currentUser;
     if (user != null && user.displayName === null) {
       setDisableButton(true); //disables card creation button
     }
   }, []);
 
-  //retrieves all user stories based on sprint and updates the UserStoryStore with the new list
-  const retrieveUserStories = (sprintNumber: number = 1) => {
-    let list: UserStory[] = [];
+  //retrieves all user stories and updates the UserStoryStore with the new list
+  const retrieveUserStories = () => {
+    let list: UserStoryType[] = [];
     var dbRef = firebase.database().ref('stories/');
     dbRef.on('value', function(snapshot) {
       snapshot.forEach(function(childSnapshot) {
         var childKey = childSnapshot.key;
         var childData = childSnapshot.val();
         childData['key'] = childKey;
-        if (childData.sprintNumber === sprintNumber) {
-          list.push(childData);
-        }
+        list.push(childData);
       });
       userStoryStore.setUserStoryList(list); //set store with list
       list = []; //resets list

@@ -9,29 +9,30 @@ import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Popper from '@material-ui/core/Popper';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
 import Hidden from '@material-ui/core/Hidden';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { resetUserStories } from '../api/userStoryApi';
+import firebase from 'firebase';
+import { userStoryStore } from '../index';
+import { observer } from 'mobx-react';
 
 /**
- * Board header used in the board page, which consists of a search bar, toggle sprint number and filter buttons
+ * Board header used in the board page, which consists of a search bar, filter buttons
  */
 
 const useStyles = makeStyles((theme: Theme) => ({
   sprintButton: {
     marginLeft: theme.spacing(2),
   },
-  textField: {
-    flexGrow: 1,
-  },
   grid: {
     margin: theme.spacing(1, 2),
   },
-  root: {
+  searchBar: {
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
@@ -51,90 +52,54 @@ const useStyles = makeStyles((theme: Theme) => ({
   ml: {
     marginLeft: theme.spacing(1),
   },
+  searchContainer: {
+    flexGrow: 1,
+    margin: theme.spacing(1, 2),
+  },
+  rightContainer: {
+    height: '100%',
+  },
 }));
-
-const options = ['Sprint 1', 'Sprint 2', 'Sprint 3'];
 
 const BoardHeader: React.FC = () => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef<any>(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [newSprintInput, setNewSprintInput] = React.useState<string>('');
 
-  function handleMenuItemClick(
-    event: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    index: React.SetStateAction<number>
-  ) {
-    setSelectedIndex(index);
-    setOpen(false);
-  }
+  React.useEffect(() => {
+    retrieveSprintDuration(); //on mount, retrieves sprint duration
+  }, []);
 
-  function handleToggle() {
-    setOpen(prevOpen => !prevOpen);
-  }
+  // handles open modal to reset sprint
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  };
 
-  function handleClose(event: { target: any }) {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
+  //handles close modal menu
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
 
-    setOpen(false);
-  }
+  // closes the modal and resets user stories
+  const handleNewSprint = () => {
+    handleModalClose(); //closes modal
+    resetUserStories();
+  };
+
+  //retrieves sprint duration from the database and updates the store
+  const retrieveSprintDuration = () => {
+    var dbRef = firebase.database().ref('sprint/sprintDate');
+    dbRef.on('value', function(snapshot) {
+      userStoryStore.setSprintDuration(snapshot.val()); //sets sprint duration to store
+    });
+  };
 
   return (
     <Grid container>
-      <Grid item xs={12} className={classes.grid}>
-        <Grid container alignItems="center">
-          <Grid item className={classes.textField}>
-            <ButtonGroup variant="contained" color="primary" ref={anchorRef}>
-              <Button>{options[selectedIndex]}</Button>
-              <Button
-                color="primary"
-                size="small"
-                aria-owns={open ? 'menu-list-grow' : undefined}
-                aria-haspopup="true"
-                onClick={handleToggle}
-              >
-                <ArrowDropDownIcon />
-              </Button>
-            </ButtonGroup>
-            <Popper open={open} anchorEl={anchorRef.current} transition>
-              <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList>
-                    {options.map((option, index) => (
-                      <MenuItem
-                        key={option}
-                        selected={index === selectedIndex}
-                        onClick={event => handleMenuItemClick(event, index)}
-                      >
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Popper>
-          </Grid>
-          <Grid item>
-            <Typography variant="caption" color="textSecondary">
-              0 Days Remaining
-            </Typography>
-          </Grid>
-          <Hidden xsDown>
-            <Grid item className={classes.sprintButton}>
-              <Button variant="contained" color="primary">
-                New Sprint
-              </Button>
-            </Grid>
-          </Hidden>
-        </Grid>
-      </Grid>
-
-      <Grid item xs={12} className={classes.grid}>
+      <Grid item className={classes.searchContainer}>
         <Grid container alignItems="center">
           <Grid item>
-            <Paper className={classes.root}>
+            <Paper className={classes.searchBar}>
               <InputBase
                 className={classes.input}
                 placeholder="Search User Stories"
@@ -153,8 +118,54 @@ const BoardHeader: React.FC = () => {
           </Grid>
         </Grid>
       </Grid>
+      <Grid item className={classes.grid}>
+        <Grid container alignItems="center" className={classes.rightContainer}>
+          <Grid item>
+            <Typography variant="caption" color="textSecondary">
+              {`${userStoryStore.getRemainingSprintDuration} Day(s) Remaining`}
+            </Typography>
+          </Grid>
+          <Hidden xsDown>
+            <Grid item className={classes.ml}>
+              <Button variant="contained" color="primary" onClick={handleModalOpen}>
+                New Sprint
+              </Button>
+            </Grid>
+          </Hidden>
+        </Grid>
+      </Grid>
+      <Dialog open={modalOpen} onClose={handleModalClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Reset Sprint</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Warning! This action will delete all 'completed' user stories and move 'in-progress' cards to 'to-do'. Type
+            <span style={{ color: 'red' }}> NEWSPRINT</span> in the field below and hit the 'confirm' button to start a
+            new sprint.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            variant="filled"
+            fullWidth
+            onChange={e => setNewSprintInput(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleModalClose} color="primary">
+            Cancel
+          </Button>
+          <Button
+            onClick={handleNewSprint}
+            color="primary"
+            variant="contained"
+            disabled={newSprintInput !== 'NEWSPRINT'}
+          >
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Grid>
   );
 };
 
-export default BoardHeader;
+export default observer(BoardHeader);
