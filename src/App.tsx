@@ -5,6 +5,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import CardCreationPage from './containers/CardCreationPage';
 import ProfilePage from './containers/ProfilePage';
 import IssuePage from './containers/IssuePage';
+import IssueCreationPage from './containers/IssueCreationPage';
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
         <Route path="/profile" component={ProfilePage} exact />
         <Route path="/create" component={CardCreationPage} exact />
         <Route path="/issues" component={IssuePage} exact />
+        <Route path="/new-issue" component={IssueCreationPage} exact />
       </BrowserRouter>
     </div>
   );

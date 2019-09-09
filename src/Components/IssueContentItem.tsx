@@ -6,6 +6,7 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { IssueType, resolveIssue } from '../api/issueApi';
 
 /**
  * Individual issue content item component. Stores the issue details and displays it to the user
@@ -14,7 +15,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     minHeight: 50,
-    borderLeft: '5px solid orange',
   },
   resolveButton: {
     textDecoration: 'underline',
@@ -26,34 +26,55 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const IssueContent = () => {
+const IssueContentItem: React.FC<{ issueDetails: IssueType }> = props => {
   const classes = useStyles();
+  const { issueDetails } = props;
+  const { title, description, issuer, status, date, key } = issueDetails;
+
+  //returns a border status color based on status obtained from the issueDetails
+  const getStatusColor = (status: string) => {
+    if (status === 'unresolved') {
+      return 'orange';
+    }
+    if (status === 'urgent') {
+      return 'red';
+    }
+    if (status === 'resolved') {
+      return 'green';
+    }
+  };
+
+  //resolves an issue card upon clicking 'mark as resolved'
+  const handleResolved = () => {
+    resolveIssue(title, description, issuer, date, key);
+  };
 
   return (
     <ExpansionPanel>
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={classes.root}>
-        <Typography>
-          Bug encounted somewhere in the codes, can't seem to render news article when changed to new endpoint
-        </Typography>
+      <ExpansionPanelSummary
+        expandIcon={<ExpandMoreIcon />}
+        className={classes.root}
+        style={{ borderLeft: `5px solid ${getStatusColor(status)}` }}
+      >
+        <Typography>{title}</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.expansionPanelDetails}>
         <Typography align="justify" paragraph color="textSecondary">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo
-          lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit
-          amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-          lacus ex, sit amet blandit leo lobortis eget.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.Lorem ipsum dolor sit amet, consectetur
-          adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
+          {description}
         </Typography>
         <div>
-          <Typography variant="caption">Issue raised by: You Liang on 24/09/2019 - </Typography>
-          <Typography variant="caption" className={classes.resolveButton}>
-            Mark as resolved
+          <Typography variant="caption">
+            {`Issue raised by: ${issuer} on ${new Date(date).toLocaleDateString()} `}
           </Typography>
+          {status !== 'resolved' && (
+            <Typography variant="caption" className={classes.resolveButton} onClick={handleResolved}>
+              Mark as resolved
+            </Typography>
+          )}
         </div>
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );
 };
 
-export default IssueContent;
+export default IssueContentItem;

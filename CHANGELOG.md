@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v.0.3] - 09/09/2019
+
+### ADDED:
+
+- Added feature to create new issues
+- Added rendering of issues at issue board
+- Added function to resolve issues
+
 ## [v.0.2] - 08/09/2019
 
 ### ADDED:

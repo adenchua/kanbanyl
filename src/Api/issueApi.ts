@@ -24,7 +24,7 @@ export const createIssue = (title: string, description: string, issuer: string, 
 };
 
 //changes a status of a issue from 'unresolved/urgent' to 'resolved'
-export const resolveIssue = (title: string, description: string, issuer: string, date: string, key: string) => {
+export const resolveIssue = (title: string, description: string, issuer: string, date: string, key: any) => {
   db.ref('issues/' + key).set({
     status: 'resolved',
     title,

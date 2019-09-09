@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { withRouter } from 'react-router-dom';
 import firebase from 'firebase';
 import { createUserStory } from '../api/userStoryApi';
+import { Link as RouterLink } from 'react-router-dom';
 
 /**
  * Returns a form to create a user story card in the database. Upon success, it redirects the user to the board page
@@ -65,6 +66,9 @@ const CardCreationContent = (props: any) => {
           <MenuItem value="Backend">Backend</MenuItem>
         </TextField>
         <Grid container justify="flex-end">
+          <Button variant="outlined" color="primary" style={{ marginRight: 8 }} component={RouterLink} to="/board">
+            Cancel
+          </Button>
           <Button type="submit" variant="contained" color="primary">
             Submit
           </Button>
