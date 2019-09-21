@@ -7,7 +7,7 @@ import { Theme } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import firebase from 'firebase';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, Redirect } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 
 /**
@@ -43,6 +43,7 @@ const ProfilePage = () => {
   const classes = useStyles();
   const [displayNameInput, setDisplayNameInput] = React.useState<string>(''); //display name input
   const [photoURLInput, setPhotoURLInput] = React.useState<string>(''); //photo url input
+  const [redirect, setRedirect] = React.useState<boolean>(false); //boolean state to check if should redirect back to board page
   const [disabledOptions, setDisabledOptions] = React.useState<boolean>(false); //state to disable textfield and update button
 
   //handles submit form for users to update the display name and photo URL. Upon success, renders an alert message
@@ -59,13 +60,17 @@ const ProfilePage = () => {
         .then(function() {
           //update successful
           setDisabledOptions(true); //disables further change
-          alert('User Profile Updated!');
+          setRedirect(true);
         })
         .catch(function(error) {
           alert('An error occured, try again later');
         });
     }
   };
+
+  if (redirect) {
+    return <Redirect to="/board" />;
+  }
 
   return (
     <Container maxWidth="md" className={classes.mt}>

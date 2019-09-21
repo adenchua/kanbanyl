@@ -57,6 +57,7 @@ const IssueContent = () => {
           if (issueStore.issueFilter === '') {
             return <IssueContentItem key={issue.key} issueDetails={issue} />;
           }
+          return null; //should not reach here
         })}
     </div>
   );

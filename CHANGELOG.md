@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### ADDED:
 
 - Added filter component to filter cards by authors or labels
+- Changed snackbar warning color from blue to red
+- Redirects user after changing profile in profile page
 
 ## [v.0.3] - 09/09/2019
 

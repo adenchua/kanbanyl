@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: theme.spacing(2),
   },
   snackbar: {
-    backgroundColor: '#428bca',
+    backgroundColor: '#d9534f',
   },
 }));
 
@@ -63,7 +63,7 @@ const Board: React.FC = (props: any) => {
         {showWarning && (
           <div className={classes.padding}>
             <SnackbarContent
-              message={'It appears you do not have a display name! Update your profile to create user stories.'}
+              message={`Hello! It appears you do not have a display name! Update your profile to create user stories.`}
               className={classes.snackbar}
             />
           </div>

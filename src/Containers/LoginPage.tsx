@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(https://source.unsplash.com/weekly?office)',
+    backgroundImage: 'url(https://source.unsplash.com/daily?office)',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
