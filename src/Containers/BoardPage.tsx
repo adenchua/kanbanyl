@@ -13,7 +13,6 @@ import SnackbarContent from '@material-ui/core/SnackbarContent';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    marginTop: theme.spacing(3),
     flexGrow: 1,
   },
   padding: {

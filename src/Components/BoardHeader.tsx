@@ -20,6 +20,7 @@ import { resetUserStories } from '../api/userStoryApi';
 import firebase from 'firebase';
 import { userStoryStore } from '../index';
 import { observer } from 'mobx-react';
+import BoardHeaderFilterButton from './BoardHeaderFilterButton';
 
 /**
  * Board header used in the board page, which consists of a search bar, filter buttons
@@ -123,9 +124,7 @@ const BoardHeader: React.FC = () => {
             </Paper>
           </Grid>
           <Grid item>
-            <Button variant="text" color="primary" className={classes.ml} disabled>
-              Filter
-            </Button>
+            <BoardHeaderFilterButton />
           </Grid>
         </Grid>
       </Grid>
